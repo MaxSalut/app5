@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:app5.Models"
+             x:Class="app5.MainPage"
+             Title="Список товарів">
+
+    <Grid RowDefinitions="*, Auto" Padding="10">
+        <!-- Список товарів -->
+        <CollectionView x:Name="ItemList"
+                Grid.Row="0"
+                ItemsSource="{Binding Items}"
+                SelectionMode="Single"
+                SelectionChanged="OnItemSelected">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Item">
+                    <Frame Margin="5" Padding="10" BorderColor="Gray" CornerRadius="5">
+                        <StackLayout Orientation="Vertical" Spacing="5">
+                            <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="18" />
+                            <Label Text="{Binding Price, StringFormat='Ціна: {0:C}'}" />
+                            <Label Text="{Binding CountryOfOrigin, StringFormat='Країна походження: {0}'}" />
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Додаткова інформація -->
+        <ContentView x:Name="DetailsView" Grid.Row="1" HeightRequest="150" IsVisible="False">
+            <StackLayout Padding="10" Spacing="5">
+                <Label x:Name="DetailsLabel" FontSize="16" FontAttributes="Bold" />
+                <Label x:Name="DetailsContent" />
+            </StackLayout>
+        </ContentView>
+
+        <!-- Кнопки управління -->
+        <StackLayout Grid.Row="2" Orientation="Horizontal" Spacing="10" HorizontalOptions="Center">
+            <Button Text="Додати товар" Clicked="OnAddItemClicked" />
+            <Button Text="Видалити товар" Clicked="OnDeleteItemClicked" />
+        </StackLayout>
+    </Grid>
+</ContentPage>
